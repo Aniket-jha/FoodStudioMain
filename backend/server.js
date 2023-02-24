@@ -25,9 +25,9 @@ if (process.env.NODE_ENV !== "PRODUCTION") {
 connectDB();
 
 cloudinary.config({
-    cloud_name:"foodstudio2",
-    api_key:'246939518728295',
-    api_secret:'U4fKo1fxuf8Npxer_26j_Q811iY'
+    cloud_name:"foodstudio",
+    api_key:'295675466867641',
+    api_secret:'OtUAP17pA1TjYKi4IID9ElMFA08'
 })
 
 

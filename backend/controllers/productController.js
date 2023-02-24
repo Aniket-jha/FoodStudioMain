@@ -8,6 +8,7 @@ const cloudinary = require("cloudinary");
 
 
 exports.createProduct= catchAsyncErrors(async (req,res,next)=>{
+  let coverImages = []
     let images = [];
 
   if (typeof req.body.images === "string") {
@@ -15,9 +16,15 @@ exports.createProduct= catchAsyncErrors(async (req,res,next)=>{
   } else {
     images = req.body.images;
   }
+  if (typeof req.body.coverImages === "string") {
+    coverImages.push(req.body.coverImages);
+  } else {
+    coverImages = req.body.coverImages;
+  }
 
 
   const imagesLinks = [];
+  const coverImagesLinks = [];
 
   for (let i = 0; i < images.length; i++) {
     const result = await cloudinary.v2.uploader.upload(images[i], {
@@ -29,8 +36,19 @@ exports.createProduct= catchAsyncErrors(async (req,res,next)=>{
       url: result.secure_url,
     });
   }
+  for (let i = 0; i < coverImages.length; i++) {
+    const result = await cloudinary.v2.uploader.upload(coverImages[i], {
+      folder: "coverImages",
+    });
+
+    coverImagesLinks.push({
+      public_id: result.public_id,
+      url: result.secure_url,
+    });
+  }
 
   req.body.images = imagesLinks;
+  req.body.coverImages = coverImagesLinks
   
   req.body.user = req.user.id
     const product = await Product.create(req.body);
@@ -47,7 +65,7 @@ exports.createProduct= catchAsyncErrors(async (req,res,next)=>{
 
 exports.getAllProducts= catchAsyncErrors(async (req,res,next)=>{
   
-    const resultPerPage = 8;
+    const resultPerPage = 50;
     const productCount = await Product.countDocuments()
    const apiFeatures = new ApiFeatures(Product.find(), req.query).search().filter().pagination(resultPerPage)
    const products = await apiFeatures.query;

@@ -15,14 +15,21 @@ const productSchema = mongoose.Schema({
     required: [true, "Please Enter product Price"],
     maxLength: [8, "Price cannot exceed 8 characters"],
   },
-  quantity:{
-    type:Number,
-   required: [true, "Please Enter product Quantity"],
-  },
+ 
   ratings: {
     type: Number,
     default: 0,
   },
+  coverImages:[{
+ public_id: {
+        type: String,
+        required: true,
+      },
+      url: {
+        type: String,
+        required: true,
+      },
+  }],
   images: [
     {
       public_id: {
