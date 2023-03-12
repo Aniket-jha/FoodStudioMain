@@ -1,12 +1,14 @@
 {
-  "name": "food",
+  "name": "FoodStudio",
   "version": "1.0.0",
-  "description": "",
+  "description": "Developed By Aniket Jha",
   "main": "backend/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node backend/server.js",
-    "dev": "nodemon backend/server.js"
+    "dev": "nodemon backend/server.js",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false && npm install --prefix frontend && npm run build --prefix frontend"
+    
   },
   "author": "",
   "license": "ISC",
@@ -25,5 +27,8 @@
     "nodemailer": "^6.7.7",
     "razorpay": "^2.8.1",
     "validator": "^13.7.0"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.1.8"
   }
 }
